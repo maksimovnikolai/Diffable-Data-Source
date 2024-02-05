@@ -24,6 +24,7 @@ final class MainViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         configureTableView()
+        configureDataSource()
     }
 }
 
@@ -47,5 +48,17 @@ extension MainViewController {
             
             return cell
         })
+        
+        // set type of animation on the data source
+        dataSource.defaultRowAnimation = .fade // .automatic
+        
+        // setup snapshot
+        var snapshot = NSDiffableDataSourceSnapshot<Section, Int>()
+        // add sections
+        snapshot.appendSections([.main])
+        // add item's
+        snapshot.appendItems([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
+        // apply changes to the dataSource
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
