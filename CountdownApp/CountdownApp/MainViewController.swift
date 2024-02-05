@@ -43,7 +43,12 @@ extension MainViewController {
             let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
             
             var content = cell.defaultContentConfiguration()
-            content.text = "\(value)"
+            if value == -1 {
+                content.text = "App launched 🚀. All looks good so far with Crashlytics.👍"
+            } else {
+                content.text = "\(value)"
+            }
+            
             cell.contentConfiguration = content
             
             return cell
@@ -100,6 +105,8 @@ extension MainViewController {
     }
     
     private func ship() {
-        
+        var snapshot = dataSource.snapshot()
+        snapshot.appendItems([-1])
+        dataSource.apply(snapshot, animatingDifferences: true)
     }
 }
