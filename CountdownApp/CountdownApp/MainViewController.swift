@@ -21,8 +21,19 @@ final class MainViewController: UIViewController {
     private var startInterval = 10 // seconds
     
     // MARK: Life cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .red
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        configureTableView()
+    }
+}
+
+extension MainViewController {
+    
+    private func configureTableView() {
+        tableView = UITableView(frame: view.bounds, style: .plain)
+        tableView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        tableView.backgroundColor = .systemBackground
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        view.addSubview(tableView)
     }
 }
