@@ -36,4 +36,16 @@ extension MainViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
         view.addSubview(tableView)
     }
+    
+    private func configureDataSource() {
+        dataSource = UITableViewDiffableDataSource<Section, Int>(tableView: tableView, cellProvider: { tableView, indexPath, value in
+            let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+            
+            var content = cell.defaultContentConfiguration()
+            content.text = "\(value)"
+            cell.contentConfiguration = content
+            
+            return cell
+        })
+    }
 }
