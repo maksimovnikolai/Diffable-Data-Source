@@ -23,12 +23,20 @@ final class MainViewController: UIViewController {
     // MARK: Life cycle
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        configureNavBar()
         configureTableView()
         configureDataSource()
     }
 }
 
 extension MainViewController {
+    
+    private func configureNavBar() {
+        navigationItem.title = "Countdown with diffable data source"
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh,
+                                                            target: self,
+                                                            action: #selector(startCountdown))
+    }
     
     private func configureTableView() {
         tableView = UITableView(frame: view.bounds, style: .plain)
@@ -71,7 +79,7 @@ extension MainViewController {
         startCountdown()
     }
     
-    private func startCountdown() {
+    @objc private func startCountdown() {
         if timer != nil {
             timer.invalidate() // stop timer
         }
