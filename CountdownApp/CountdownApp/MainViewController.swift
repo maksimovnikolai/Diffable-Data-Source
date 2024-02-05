@@ -86,6 +86,20 @@ extension MainViewController {
     
     @objc
     func decrementCounter() {
+        // get access to the snapshot to manipulate data
+        // snapshot is the "source of truth" for the table view's data
+        var snapshot = dataSource.snapshot()
+        guard startInterval > 0 else {
+            timer.invalidate()
+            ship()
+            return
+        }
+        startInterval -= 1 // 10, 9, 8, 7...0
+        snapshot.appendItems([startInterval]) // 9 is inserted in table view
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+    
+    private func ship() {
         
     }
 }
