@@ -24,8 +24,25 @@ final class MainViewController: UIViewController {
 extension MainViewController {
     
     private func commonInit() {
+        configureNavBar()
         configureTableView()
         configureDataSource()
+    }
+    
+    //MARK: Configure Nav Bar
+    private func configureNavBar() {
+        navigationItem.title = "Shopping List"
+        
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditState))
+    }
+    
+    @objc
+    private func toggleEditState() {
+        // перевод в состояние редактирования
+        tableView.setEditing(!tableView.isEditing, animated: true)
+        
+        // имя кнопки в зависимости, включено ли редактирование или нет
+        navigationItem.leftBarButtonItem?.title = tableView.isEditing ? "Done" : "Edit"
     }
     
     //MARK: Configure Table View
