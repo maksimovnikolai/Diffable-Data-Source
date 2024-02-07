@@ -51,6 +51,7 @@ extension MainViewController {
     private func presentAddVC() {
         let addVc = AddItemViewController()
         addVc.modalPresentationStyle = .fullScreen
+        addVc.delegate = self
         navigationController?.pushViewController(addVc, animated: true)
 //        present(addVc, animated: true)
     }
@@ -86,6 +87,18 @@ extension MainViewController {
             snapshot.appendSections([category])
             snapshot.appendItems(items)
         }
+        dataSource.apply(snapshot, animatingDifferences: true)
+    }
+}
+
+extension MainViewController: AddItemViewControllerDelegate {
+    func setItem(item: Item) {
+        var snapshot = dataSource.snapshot()
+        snapshot.appendItems([item], toSection: item.category)
+        
+        // no need for reloadData()
+        // no need for property observers
+        // apply snapshot is all we need with diffable data source
         dataSource.apply(snapshot, animatingDifferences: true)
     }
 }

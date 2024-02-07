@@ -7,9 +7,14 @@
 
 import UIKit
 
+protocol AddItemViewControllerDelegate: AnyObject {
+    func setItem(item: Item)
+}
+
 final class AddItemViewController: UIViewController {
     
     private var selectedCategory: Category?
+    weak var delegate: AddItemViewControllerDelegate?
     
     private let pickerView: UIPickerView = {
         let picker = UIPickerView()
@@ -67,6 +72,7 @@ final class AddItemViewController: UIViewController {
         }
 
         let item = Item(name: name, price: price, category: selectedCategory)
+        delegate?.setItem(item: item)
         navigationController?.popToRootViewController(animated: true)
     }
 }
@@ -125,7 +131,6 @@ extension AddItemViewController {
             saveButton.centerYAnchor.constraint(equalTo: view.centerYAnchor, constant: 200),
             saveButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
             saveButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
-//            saveButton.heightAnchor.constraint(equalToConstant: 44),
         ])
     }
 }
