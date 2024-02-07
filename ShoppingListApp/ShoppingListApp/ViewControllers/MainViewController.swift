@@ -34,6 +34,8 @@ extension MainViewController {
         navigationItem.title = "Shopping List"
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Edit", style: .plain, target: self, action: #selector(toggleEditState))
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(presentAddVC))
     }
     
     @objc
@@ -43,6 +45,14 @@ extension MainViewController {
         
         // имя кнопки в зависимости, включено ли редактирование или нет
         navigationItem.leftBarButtonItem?.title = tableView.isEditing ? "Done" : "Edit"
+    }
+    
+    @objc
+    private func presentAddVC() {
+        let addVc = AddItemViewController()
+        addVc.modalPresentationStyle = .fullScreen
+        navigationController?.pushViewController(addVc, animated: true)
+//        present(addVc, animated: true)
     }
     
     //MARK: Configure Table View
